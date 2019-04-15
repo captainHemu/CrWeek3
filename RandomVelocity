@@ -1,0 +1,40 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class RandomVelocity : MonoBehaviour {
+
+	[SerializeField] Rigidbody2D rigidbody2D;
+
+	public RandomVelocity(Rigidbody2D rigidbody2D)
+	{
+		this.rigidbody2D = rigidbody2D;
+	}
+
+	public override bool Equals(object obj)
+	{
+		var velocity = obj as RandomVelocity;
+		return velocity != null &&
+			   base.Equals(obj) &&
+			   EqualityComparer<Rigidbody2D>.Default.Equals(rigidbody2D, velocity.rigidbody2D);
+	}
+
+	void Start()
+		{
+			
+			const float MinImpulseForce = 1f;
+			const float MaxImpulseForce = 2f;
+			float angle = Random.Range(0, 2 * Mathf.PI);
+			Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+			float magnitude = Random.Range(MinImpulseForce, MaxImpulseForce);
+			rigidbody2D.AddForce(magnitude * direction, ForceMode2D.Impulse);
+		}
+
+
+	
+
+	// Update is called once per frame
+	void Update () {
+		
+	}
+}
